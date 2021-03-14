@@ -2,29 +2,30 @@ import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import Scoreboard from './Components/Scoreboard/Scoreboard';
 import {Button} from './Components/Button/Button';
-import {Input} from './Components/Input/Input';
-import s from './Components/Input/Input.module.css';
+import {Inputs} from './Components/Input/Inputs';
 
 function App() {
 
     const [count, setCount] = useState(0)
-    const [start, setStart] = useState('')
+    const [start, setStart] = useState(0)
+    const [max, setMax] = useState(0)
 
-    const onChange = (e: ChangeEvent<HTMLInputElement>) =>setStart(e.currentTarget.value)
-
-
-    function addStart() {
-
-    }
+    const onChangeStart = (e: ChangeEvent<HTMLInputElement>) =>setStart(+(e.currentTarget.value))
+    const onChangeMax = (e: ChangeEvent<HTMLInputElement>) =>setMax(+(e.currentTarget.value))
 
     function addNumber() {
-        if (count < 5) {
+        if (count <= max) {
             return setCount(count + 1)
         }
     }
 
+    function set() {
+
+        setCount(start)
+    }
+
     function reset() {
-        setCount(0)
+        setCount(start)
     }
 
     return (
@@ -33,15 +34,23 @@ function App() {
             <div className='containerFullLeftCounter'>
                 <div className='containerCounter'>
 
-                    <div className='scoreboardLeft'>
+                    <div className='scoreboardSettings'>
+                        <div className='textScoreboardSettings'>
+                            <div className='textMax'>Max.value:</div>
+                            <div className='textStart'>Start value:</div>
+                        </div>
+                        <div className='inputContainer'>
+                            <Inputs
+                            start={start}
+                            max={max}
+                            onChangeStart={onChangeStart}
+                            onChangeMax={onChangeMax}/>
+                        </div>
 
-                        <input type='number' className={s.input} value={start} onChange={onChange}/>
-                        {/*<Input />*/}
-                        {/*<Input />*/}
                     </div>
 
                     <div className='containerButton'>
-                        <Button onClick={addNumber} title='set' disabled={count === 5}/>
+                        <Button onClick={set} title='set'  />
                     </div>
 
                 </div>
@@ -51,13 +60,16 @@ function App() {
             <div className='containerCounter'>
 
                 <div className='scoreboard'>
-                    <Scoreboard count={count}/>
+                    <Scoreboard
+                        count={count}
+                        start={max}
+                    />
                 </div>
 
                 <div className='containerButton'>
 
                      <span className='button'>
-            <Button onClick={addNumber} title='inc' disabled={count === 5}/>
+            <Button onClick={addNumber} title='inc' disabled={count === max}/>
             <Button onClick={reset} title='reset'/>
                     </span>
 

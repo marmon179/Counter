@@ -4,11 +4,13 @@ import s from './Scoreboard.module.css'
 
 type ScoreboardType = {
     count: number
+    start:number
+
 }
 
 function Scoreboard(props: ScoreboardType) {
     return (
-        <div className={props.count === 5 ? s.error : ''}>
+        <div className={props.count === props.start ? s.error : ''}>
             {props.count}
         </div>)
 
