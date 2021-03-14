@@ -1,10 +1,21 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
-import Scoreboard from './Scoreboard';
-import {Button} from './Button';
+import Scoreboard from './Components/Scoreboard/Scoreboard';
+import {Button} from './Components/Button/Button';
+import {Input} from './Components/Input/Input';
+import s from './Components/Input/Input.module.css';
 
 function App() {
+
     const [count, setCount] = useState(0)
+    const [start, setStart] = useState('')
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>) =>setStart(e.currentTarget.value)
+
+
+    function addStart() {
+
+    }
 
     function addNumber() {
         if (count < 5) {
@@ -20,30 +31,36 @@ function App() {
         <div className="App">
 
             <div className='containerFullLeftCounter'>
-                <div className='containerLeftCounter'>
+                <div className='containerCounter'>
 
                     <div className='scoreboardLeft'>
+
+                        <input type='number' className={s.input} value={start} onChange={onChange}/>
+                        {/*<Input />*/}
+                        {/*<Input />*/}
                     </div>
 
-                    <div className='containerButtonLeft'>
-
+                    <div className='containerButton'>
+                        <Button onClick={addNumber} title='set' disabled={count === 5}/>
                     </div>
 
                 </div>
             </div>
 
 
-            <div className='containerRightCounter'>
+            <div className='containerCounter'>
 
-                <div className='scoreboardRight'>
+                <div className='scoreboard'>
                     <Scoreboard count={count}/>
                 </div>
 
-                <div className='containerButtonRight'>
+                <div className='containerButton'>
 
-                    <Button addNumber={addNumber}
-                            reset={reset}
-                            count={count}/>
+                     <span className='button'>
+            <Button onClick={addNumber} title='inc' disabled={count === 5}/>
+            <Button onClick={reset} title='reset'/>
+                    </span>
+
                 </div>
 
             </div>
