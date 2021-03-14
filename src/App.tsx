@@ -18,16 +18,36 @@ function App() {
 
     return (
         <div className="App">
-            <div className='container'>
-                <div className='scoreboard'>
+
+            <div className='containerFullLeftCounter'>
+                <div className='containerLeftCounter'>
+
+                    <div className='scoreboardLeft'>
+                    </div>
+
+                    <div className='containerButtonLeft'>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div className='containerRightCounter'>
+
+                <div className='scoreboardRight'>
                     <Scoreboard count={count}/>
                 </div>
-                <div className='containerButton'>
+
+                <div className='containerButtonRight'>
+
                     <Button addNumber={addNumber}
                             reset={reset}
                             count={count}/>
                 </div>
+
             </div>
+
         </div>
     );
 }
