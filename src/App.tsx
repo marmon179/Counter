@@ -9,9 +9,16 @@ function App() {
     const [count, setCount] = useState(0)
     const [start, setStart] = useState(0)
     const [max, setMax] = useState(0)
+    const [disabled,setDisabled] = useState(false)
 
-    const onChangeStart = (e: ChangeEvent<HTMLInputElement>) =>setStart(+(e.currentTarget.value))
-    const onChangeMax = (e: ChangeEvent<HTMLInputElement>) =>setMax(+(e.currentTarget.value))
+    const onChangeStart = (e: ChangeEvent<HTMLInputElement>) =>{
+        setStart(+(e.currentTarget.value))
+        setDisabled(false)
+    }
+    const onChangeMax = (e: ChangeEvent<HTMLInputElement>) =>{
+        setMax(+(e.currentTarget.value))
+        setDisabled(false)
+    }
 
     function addNumber() {
         if (count <= max) {
@@ -20,8 +27,8 @@ function App() {
     }
 
     function set() {
-
         setCount(start)
+        setDisabled(true)
     }
 
     function reset() {
@@ -50,7 +57,7 @@ function App() {
                     </div>
 
                     <div className='containerButton'>
-                        <Button onClick={set} title='set'  />
+                        <Button onClick={set} title='set' disabled={disabled} />
                     </div>
 
                 </div>
