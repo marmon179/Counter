@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import Scoreboard from './Components/Scoreboard/Scoreboard';
 import {Button} from './Components/Button/Button';
@@ -9,15 +9,30 @@ function App() {
     const [count, setCount] = useState(0)
     const [start, setStart] = useState(0)
     const [max, setMax] = useState(0)
-    const [disabled,setDisabled] = useState(false)
+    const [disabled, setDisabled] = useState(false)
 
-    const onChangeStart = (e: ChangeEvent<HTMLInputElement>) =>{
+
+    const onChangeStart = (e: ChangeEvent<HTMLInputElement>) => {
         setStart(+(e.currentTarget.value))
-        setDisabled(false)
+        if (start < 1) {
+            setDisabled(true)
+
+        } else if (start === max) {
+            setDisabled(true)
+        } else {
+            setDisabled(false)
+        }
     }
-    const onChangeMax = (e: ChangeEvent<HTMLInputElement>) =>{
+    const onChangeMax = (e: ChangeEvent<HTMLInputElement>) => {
         setMax(+(e.currentTarget.value))
-        setDisabled(false)
+        if (max < 1) {
+            setDisabled(true)
+        } else if (start === max) {
+            setDisabled(true)
+        } else {
+            setDisabled(false)
+        }
+
     }
 
     function addNumber() {
@@ -48,16 +63,16 @@ function App() {
                         </div>
                         <div className='inputContainer'>
                             <Inputs
-                            start={start}
-                            max={max}
-                            onChangeStart={onChangeStart}
-                            onChangeMax={onChangeMax}/>
+                                start={start}
+                                max={max}
+                                onChangeStart={onChangeStart}
+                                onChangeMax={onChangeMax}/>
                         </div>
 
                     </div>
 
                     <div className='containerButton'>
-                        <Button onClick={set} title='set' disabled={disabled} />
+                        <Button onClick={set} title='set' disabled={disabled}/>
                     </div>
 
                 </div>
@@ -69,7 +84,8 @@ function App() {
                 <div className='scoreboard'>
                     <Scoreboard
                         count={count}
-                        start={max}
+                        start={start}
+                        max={max}
                     />
                 </div>
 
