@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useState} from 'react';
 import './App.css';
-import Scoreboard from './Components/Scoreboard/Scoreboard';
 import {Button} from './Components/Button/Button';
 import {Inputs} from './Components/Input/Inputs';
+import {Scoreboard} from './Components/Scoreboard/Scoreboard';
 
 function App() {
 
@@ -10,45 +10,31 @@ function App() {
     const [start, setStart] = useState(0)
     const [max, setMax] = useState(0)
     const [disabled, setDisabled] = useState(false)
-    const [display,setDisplay]=useState(true)
+    const [display, setDisplay] = useState(true)
 
+    let isStartValue = start <= 0 || start >= max
+    let isMaxValue = max <= 0
+    let isIncButton = count <= max
     let isError = max < 0 || start >= max || start < 0
 
-
-    const onChangeStart = (e: ChangeEvent<HTMLInputElement>) => {
-        setStart(+(e.currentTarget.value))
+    const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setStart(Number(e.currentTarget.value))
         setDisplay(true)
-        if (start < 0 || start >= max) {
-            setDisabled(true)
-        } else {
-            setDisabled(false)
-        }
+        isStartValue ? setDisabled(true) : setDisabled(false)
     }
-    const onChangeMax = (e: ChangeEvent<HTMLInputElement>) => {
-        setMax(+(e.currentTarget.value))
+    const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setMax(Number(e.currentTarget.value))
         setDisplay(true)
-        if (max < 0) {
-            setDisabled(true)
-        }  else {
-            setDisabled(false)
-        }
+        isMaxValue ? setDisabled(true) : setDisabled(false)
     }
-
-    function addNumber() {
-        if (count <= max) {
-            return setCount(count + 1)
-        }
-    }
-
-    function set() {
+    const incButton = () => isIncButton ? setCount(count + 1) : ''
+    const setButton = () => {
         setCount(start)
         setDisabled(true)
         setDisplay(false)
     }
 
-    function reset() {
-        setCount(start)
-    }
+    const resetButton = () => setCount(start)
 
     return (
         <div className="App">
@@ -66,8 +52,8 @@ function App() {
                             <Inputs
                                 start={start}
                                 max={max}
-                                onChangeStart={onChangeStart}
-                                onChangeMax={onChangeMax}/>
+                                onChangeStart={onChangeStartValue}
+                                onChangeMax={onChangeMaxValue}/>
 
                         </div>
 
@@ -75,7 +61,7 @@ function App() {
 
                     <div className='containerButton'>
 
-                        <Button onClick={set}  title='set' disabled={disabled} />
+                        <Button onClick={setButton} title='set' disabled={disabled}/>
 
                     </div>
                 </div>
@@ -100,8 +86,8 @@ function App() {
 
                      <span className='button'>
 
-            <Button onClick={addNumber} title='inc' disabled={count === max}/>
-            <Button onClick={reset} title='reset'/>
+            <Button onClick={incButton} title='inc' disabled={count === max}/>
+            <Button onClick={resetButton} title='reset'/>
 
                     </span>
 

@@ -10,7 +10,7 @@ type ScoreboardType = {
     isError: boolean
 }
 
-function Scoreboard(props: ScoreboardType) {
+export const Scoreboard = (props: ScoreboardType) => {
     const textError = <span className={s.textError}>Incorrect value!</span>
     const textSet = <span className={s.textSet}>enter values and press "set"</span>
 
@@ -26,4 +26,3 @@ function Scoreboard(props: ScoreboardType) {
 
 }
 
-export default Scoreboard
