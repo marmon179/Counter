@@ -69,8 +69,8 @@ function App() {
                         <div className='inputContainer'>
 
                             <Inputs
-                                start={start}
-                                max={max}
+                                startValue={start}
+                                maxValue={max}
                                 onChangeStart={onChangeStartValue}
                                 onChangeMax={onChangeMaxValue}/>
 
@@ -93,8 +93,8 @@ function App() {
 
                     <Scoreboard
                         count={count}
-                        start={start}
-                        max={max}
+                        startValue={start}
+                        maxValue={max}
                         isError={isError}
                         display={display}
 

@@ -4,8 +4,8 @@ import s from './Scoreboard.module.css'
 
 type ScoreboardType = {
     count: number
-    start: number
-    max: number
+    startValue: number
+    maxValue: number
     display: boolean
     isError: boolean
 }
@@ -17,7 +17,7 @@ export const Scoreboard = (props: ScoreboardType) => {
     let Error2 = (props.isError ? textError : textSet)
 
     return (
-        <div className={props.count === props.max ? s.error : ''}>
+        <div className={props.count === props.maxValue ? s.error : ''}>
             {
                 props.display ? Error2 : props.count
 
