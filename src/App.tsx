@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import {Button} from './Components/Button/Button';
 import {Inputs} from './Components/Input/Inputs';
@@ -12,22 +12,41 @@ function App() {
     const [disabled, setDisabled] = useState(false)
     const [display, setDisplay] = useState(true)
 
-    let isStartValue = start <= 0 || start >= max
-    let isMaxValue = max <= 0
-    let isIncButton = count <= max
-    let isError = max < 0 || start >= max || start < 0
+    useEffect(() => {
+        let valueAssMax = localStorage.getItem('counterMax')
+        if (valueAssMax) {
+            let newValue = JSON.parse(valueAssMax)
+            setMax(newValue)
+        }
+    }, [])
+    useEffect(() => {
+        let valueAssStart = localStorage.getItem('counterStart')
+        if (valueAssStart) {
+            let newValue = JSON.parse(valueAssStart)
+            setStart(newValue)
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('counterMax', JSON.stringify(max))
+    }, [max])
+    useEffect(() => {
+        localStorage.setItem('counterStart', JSON.stringify(start))
+    }, [start])
+
+    let isError = max < 0 || start >= max || start < 0 || max === start
 
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
         setStart(Number(e.currentTarget.value))
         setDisplay(true)
-        isStartValue ? setDisabled(true) : setDisabled(false)
+        isError ? setDisabled(true) : setDisabled(false)
     }
     const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
         setMax(Number(e.currentTarget.value))
         setDisplay(true)
-        isMaxValue ? setDisabled(true) : setDisabled(false)
+        isError ? setDisabled(true) : setDisabled(false)
     }
-    const incButton = () => isIncButton ? setCount(count + 1) : ''
+    const incButton = () => count <= max ? setCount(count + 1) : ''
     const setButton = () => {
         setCount(start)
         setDisabled(true)
