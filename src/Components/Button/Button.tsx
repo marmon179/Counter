@@ -7,6 +7,7 @@ type ButtonPropsType = {
     onClick: () => void
 }
 
+
 export function Button(props: ButtonPropsType) {
     return (
         <button className={s.button}
