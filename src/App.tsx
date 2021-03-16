@@ -9,7 +9,6 @@ function App() {
     const [count, setCount] = useState(0)
     const [start, setStart] = useState(0)
     const [max, setMax] = useState(0)
-    const [disabled, setDisabled] = useState(false)
     const [display, setDisplay] = useState(true)
 
     useEffect(() => {
@@ -39,17 +38,14 @@ function App() {
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
         setStart(Number(e.currentTarget.value))
         setDisplay(true)
-        isError ? setDisabled(true) : setDisabled(false)
     }
     const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
         setMax(Number(e.currentTarget.value))
         setDisplay(true)
-        isError ? setDisabled(true) : setDisabled(false)
     }
     const incButton = () => count <= max ? setCount(count + 1) : ''
     const setButton = () => {
         setCount(start)
-        setDisabled(true)
         setDisplay(false)
     }
 
@@ -80,7 +76,7 @@ function App() {
 
                     <div className='containerButton'>
 
-                        <Button onClick={setButton} title='set' disabled={disabled}/>
+                        <Button onClick={setButton} title='set' disabled={isError}/>
 
                     </div>
                 </div>
