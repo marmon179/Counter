@@ -14,6 +14,7 @@ type InputPropsType = {
 export function Inputs(props: InputPropsType) {
     let errorStart = (props.maxValue < 0) || (props.startValue === props.maxValue) ? s.error : s.input
     let errorMax = (props.startValue < 0) || (props.startValue === props.maxValue) ? s.error : s.input
+
     return (
         <>
             <input type='number'
@@ -28,6 +29,5 @@ export function Inputs(props: InputPropsType) {
                    onChange={props.onChangeStart}
                    style={{width: 90}}/>
         </>
-
     )
 }

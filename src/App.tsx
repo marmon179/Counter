@@ -34,7 +34,7 @@ function App() {
         localStorage.setItem('counterStart', JSON.stringify(start))
     }, [start])
 
-    let isError = max < 0 || start >= max || start < 0
+    const isError = max < 0 || start >= max || start < 0
 
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
         setStart(Number(e.currentTarget.value))
@@ -57,27 +57,21 @@ function App() {
 
     return (
         <div className="App">
-
             <div className='containerFullLeftCounter'>
                 <div className='containerCounter'>
-
                     <div className='scoreboardSettings'>
                         <div className='textScoreboardSettings'>
                             <div className='textMax'>Max.value:</div>
                             <div className='textStart'>Start value:</div>
                         </div>
                         <div className='inputContainer'>
-
                             <Inputs
                                 startValue={start}
                                 maxValue={max}
                                 onChangeStart={onChangeStartValue}
                                 onChangeMax={onChangeMaxValue}/>
-
                         </div>
-
                     </div>
-
                     <div className='containerButton'>
 
                         <Button onClick={setButton} title='set' disabled={disabled || isError}/>
@@ -85,10 +79,7 @@ function App() {
                     </div>
                 </div>
             </div>
-
-
             <div className='containerCounter'>
-
                 <div className='scoreboard'>
 
                     <Scoreboard
@@ -97,23 +88,17 @@ function App() {
                         maxValue={max}
                         isError={isError}
                         display={display}
-
                     />
                 </div>
-
                 <div className='containerButton'>
-
                      <span className='button'>
 
             <Button onClick={incButton} title='inc' disabled={count === max}/>
             <Button onClick={resetButton} title='reset'/>
 
                     </span>
-
                 </div>
-
             </div>
-
         </div>
     );
 }

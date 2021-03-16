@@ -14,15 +14,14 @@ export const Scoreboard = (props: ScoreboardType) => {
     const textError = <span className={s.textError}>Incorrect value!</span>
     const textSet = <span className={s.textSet}>enter values and press "set"</span>
 
-    let Error2 = (props.isError ? textError : textSet)
+    const error1 = props.count === props.maxValue ? s.error : ''
+    const error2 = (props.isError ? textError : textSet)
 
     return (
-        <div className={props.count === props.maxValue ? s.error : ''}>
+        <div className={error1}>
             {
-                props.display ? Error2 : props.count
-
+                props.display ? error2 : props.count
             }
         </div>)
-
 }
 
