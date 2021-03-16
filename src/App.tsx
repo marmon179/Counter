@@ -33,7 +33,7 @@ function App() {
         localStorage.setItem('counterStart', JSON.stringify(start))
     }, [start])
 
-    let isError = max < 0 || start >= max || start < 0 || max === start
+    let isError = max < 0 || start >= max || start < 0
 
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
         setStart(Number(e.currentTarget.value))
