@@ -1,16 +1,15 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
-import {Button} from './Components/Button/Button';
-import {Inputs} from './Components/Input/Inputs';
-import {Scoreboard} from './Components/Scoreboard/Scoreboard';
+import SettingCounter from './Components/SettingCounter/SettingCounter';
+import Counter from './Components/Counter/Counter';
 
 function App() {
 
-    const [count, setCount] = useState(0)
-    const [start, setStart] = useState(0)
-    const [max, setMax] = useState(0)
-    const [disabled, setDisabled] = useState(false)
-    const [display, setDisplay] = useState(true)
+    const [count, setCount] = useState<number>(0)
+    const [start, setStart] = useState<number>(0)
+    const [max, setMax] = useState<number>(0)
+    const [disabled, setDisabled] = useState<boolean>(false)
+    const [display, setDisplay] = useState<boolean>(true)
 
     useEffect(() => {
         let valueAssMax = localStorage.getItem('counterMax')
@@ -57,48 +56,24 @@ function App() {
 
     return (
         <div className="App">
-            <div className='containerFullLeftCounter'>
-                <div className='containerCounter'>
-                    <div className='scoreboardSettings'>
-                        <div className='textScoreboardSettings'>
-                            <div className='textMax'>Max.value:</div>
-                            <div className='textStart'>Start value:</div>
-                        </div>
-                        <div className='inputContainer'>
-                            <Inputs
-                                startValue={start}
-                                maxValue={max}
-                                onChangeStart={onChangeStartValue}
-                                onChangeMax={onChangeMaxValue}/>
-                        </div>
-                    </div>
-                    <div className='containerButton'>
-
-                        <Button onClick={setButton} title='set' disabled={disabled || isError}/>
-
-                    </div>
-                </div>
-            </div>
-            <div className='containerCounter'>
-                <div className='scoreboard'>
-
-                    <Scoreboard
-                        count={count}
-                        startValue={start}
-                        maxValue={max}
-                        isError={isError}
-                        display={display}
-                    />
-                </div>
-                <div className='containerButton'>
-                     <span className='button'>
-
-            <Button onClick={incButton} title='inc' disabled={count === max}/>
-            <Button onClick={resetButton} title='reset'/>
-
-                    </span>
-                </div>
-            </div>
+            <SettingCounter
+                setButton={setButton}
+                onChangeStartValue={onChangeStartValue}
+                onChangeMaxValue={onChangeMaxValue}
+                start={start}
+                max={max}
+                disabled={disabled}
+                isError={isError}/>
+            <Counter
+                count={count}
+                start={start}
+                max={max}
+                disabled={disabled}
+                isError={isError}
+                incButton={incButton}
+                resetButton={resetButton}
+                setButton={setButton}
+                display={display}/>
         </div>
     );
 }
