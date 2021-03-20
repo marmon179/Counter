@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {Inputs} from '../Input/Inputs';
-import {Button} from '../Button/Button';
+import {ButtonCounter} from '../Button/ButtonCounter';
 import s from './SettingCounter.module.css'
 
 type SettingCounterPropsType = {
@@ -27,11 +27,12 @@ const SettingCounter = (props: SettingCounterPropsType) => {
                         maxValue={props.max}
                         onChangeStart={props.onChangeStartValue}
                         onChangeMax={props.onChangeMaxValue}/>
+
                 </div>
             </div>
             <div className={s.containerButton}>
 
-                <Button onClick={props.setButton} title='set' disabled={props.disabled || props.isError}/>
+                <ButtonCounter onClick={props.setButton} title='set' disabled={props.disabled || props.isError}/>
 
             </div>
         </div>
