@@ -2,6 +2,9 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import SettingCounter from './Components/SettingCounter/SettingCounter';
 import Counter from './Components/Counter/Counter';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppStateType} from './bll/store';
+import {resetButtonAC, setButtonAC} from './bll/counter-reducer';
 
 function App() {
 
@@ -11,27 +14,32 @@ function App() {
     const [disabled, setDisabled] = useState<boolean>(false)
     const [display, setDisplay] = useState<boolean>(true)
 
-    useEffect(() => {
-        let valueAssMax = localStorage.getItem('counterMax')
-        if (valueAssMax) {
-            let newValue = JSON.parse(valueAssMax)
-            setMax(newValue)
-        }
-    }, [])
-    useEffect(() => {
-        let valueAssStart = localStorage.getItem('counterStart')
-        if (valueAssStart) {
-            let newValue = JSON.parse(valueAssStart)
-            setStart(newValue)
-        }
-    }, [])
+    const value = useSelector<AppStateType,number>( state => state.counter.count)
+    const dispatch = useDispatch()
 
-    useEffect(() => {
-        localStorage.setItem('counterMax', JSON.stringify(max))
-    }, [max])
-    useEffect(() => {
-        localStorage.setItem('counterStart', JSON.stringify(start))
-    }, [start])
+
+    //
+    // useEffect(() => {
+    //     let valueAssMax = localStorage.getItem('counterMax')
+    //     if (valueAssMax) {
+    //         let newValue = JSON.parse(valueAssMax)
+    //         setMax(newValue)
+    //     }
+    // }, [])
+    // useEffect(() => {
+    //     let valueAssStart = localStorage.getItem('counterStart')
+    //     if (valueAssStart) {
+    //         let newValue = JSON.parse(valueAssStart)
+    //         setStart(newValue)
+    //     }
+    // }, [])
+    //
+    // useEffect(() => {
+    //     localStorage.setItem('counterMax', JSON.stringify(max))
+    // }, [max])
+    // useEffect(() => {
+    //     localStorage.setItem('counterStart', JSON.stringify(start))
+    // }, [start])
 
     const isError = max < 0 || start >= max || start < 0
 
@@ -47,12 +55,13 @@ function App() {
     }
     const incButton = () => count <= max ? setCount(count + 1) : ''
     const setButton = () => {
-        setCount(start)
-        setDisabled(true)
-        setDisplay(false)
+        dispatch(setButtonAC())
+        // setCount(start)
+        // setDisabled(true)
+        // setDisplay(false)
     }
 
-    const resetButton = () => setCount(start)
+    const resetButton = () =>{ dispatch(resetButtonAC())} /*setCount(start)*/
 
     return (
         <div className="App">
