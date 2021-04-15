@@ -23,30 +23,6 @@ function App() {
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {dispatch(onChangeStartValueAC(e))}
     const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {dispatch(onChangeMaxValueAC(e))}
 
-
-
-    //
-    // useEffect(() => {
-    //     let valueAssMax = localStorage.getItem('counterMax')
-    //     if (valueAssMax) {
-    //         let newValue = JSON.parse(valueAssMax)
-    //         setMax(newValue)
-    //     }
-    // }, [])
-    // useEffect(() => {
-    //     let valueAssStart = localStorage.getItem('counterStart')
-    //     if (valueAssStart) {
-    //         let newValue = JSON.parse(valueAssStart)
-    //         setStart(newValue)
-    //     }
-    // }, [])
-    //
-    // useEffect(() => {
-    //     localStorage.setItem('counterMax', JSON.stringify(max))
-    // }, [max])
-    // useEffect(() => {
-    //     localStorage.setItem('counterStart', JSON.stringify(start))
-    // }, [start])
     return (
         <div className="App">
             <SettingCounter
