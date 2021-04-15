@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import {Inputs} from '../Input/Inputs';
+import {Input} from '../Input/Input';
 import {ButtonCounter} from '../Button/ButtonCounter';
 import s from './SettingCounter.module.css'
 
@@ -13,7 +13,11 @@ type SettingCounterPropsType = {
     onChangeMaxValue: (e: ChangeEvent<HTMLInputElement>)=> void
 }
 
+
+
 const SettingCounter = (props:SettingCounterPropsType) => {
+    const errorStart = ( props.max < 0) || (props.start === props.max) ? s.error : s.input
+    const errorMax = (props.start < 0) || (props.start >= props.max) ? s.error : s.input
 
     return (
         <div className={s.containerCounter}>
@@ -23,12 +27,16 @@ const SettingCounter = (props:SettingCounterPropsType) => {
                     <div className={s.textStart}>Start value:</div>
                 </div>
                 <div className={s.inputContainer}>
-                    <Inputs
-                        startValue={props.start}
-                        maxValue={props.max}
-                        onChangeStart={props.onChangeStartValue}
-                        onChangeMax={props.onChangeMaxValue}/>
-
+                    <Input
+                        value={props.max}
+                        onChange={props.onChangeMaxValue}
+                        error={errorMax}
+                    />
+                    <Input
+                        value={props.start}
+                        onChange={props.onChangeStartValue}
+                        error={errorStart}
+                    />
                 </div>
             </div>
             <div className={s.containerButton}>
