@@ -4,16 +4,17 @@ import {ButtonCounter} from '../Button/ButtonCounter';
 import s from './SettingCounter.module.css'
 
 type SettingCounterPropsType = {
+    isError:boolean
     start: number
     max: number
-    onChangeStartValue: (e: ChangeEvent<HTMLInputElement>) => void
-    onChangeMaxValue: (e: ChangeEvent<HTMLInputElement>) => void
-    setButton: () => void
     disabled: boolean
-    isError: boolean
+    setButton:() =>void
+    onChangeStartValue: (e: ChangeEvent<HTMLInputElement>)=> void
+    onChangeMaxValue: (e: ChangeEvent<HTMLInputElement>)=> void
 }
 
-const SettingCounter = (props: SettingCounterPropsType) => {
+const SettingCounter = (props:SettingCounterPropsType) => {
+
     return (
         <div className={s.containerCounter}>
             <div className={s.scoreboard}>
@@ -32,7 +33,7 @@ const SettingCounter = (props: SettingCounterPropsType) => {
             </div>
             <div className={s.containerButton}>
 
-                <ButtonCounter onClick={props.setButton} title='set' disabled={props.disabled || props.isError}/>
+                <ButtonCounter onClick={props.setButton} title="set" disabled={props.disabled || props.isError}/>
 
             </div>
         </div>

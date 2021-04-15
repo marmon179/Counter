@@ -1,7 +1,9 @@
+import {ChangeEvent} from 'react';
+
 const initialState = {
     count: 0,
-    start: 0,
-    max: 0,
+    start: 8,
+    max: 10,
     disabled: false,
     display: true
 }
@@ -11,46 +13,23 @@ type initialStateType = typeof initialState
 export const counterReducer = (state: initialStateType = initialState, action: ActionType): initialStateType => {
     switch (action.type) {
         case 'INC-BUTTON':
-            const stateCopy = {...state}
-
             return {
-                ...state,
+                ...state, count: state.count + 1
             }
-        case 'SET-BUTTON'  : {
-            const stateCopy = {...state}
-            stateCopy.count = stateCopy.start
-            stateCopy.disabled = true
-            stateCopy.display = false
+        case 'SET-BUTTON'  :
             return {
-                ...state
+                ...state, count: state.start, disabled: true, display: false
             }
-        }
         case 'RESET-BUTTON': {
-            const stateCopy = {...state}
-            stateCopy.count = stateCopy.start
             return {
-                ...state
+                ...state, count: state.start
             }
         }
         case 'ON-CHANGE-START-VALUE': {
-            const stateCopy = {...state}
-            // const setStart = (e: ChangeEvent<HTMLInputElement>) => {
-            //    return  Number(e.currentTarget.value)
-            // }
-            // stateCopy.start = setStart
-            stateCopy.display = true
-            stateCopy.disabled = false
+            return {...state, display: true, disabled: false, start: Number(action.e.currentTarget.value)}
         }
-            return {
-                ...state,
-            }
         case 'ON-CHANGE-MAX-VALUE': {
-            const stateCopy = {...state}
-            const setMax = () => {
-            }
-            stateCopy.display = true
-            stateCopy.disabled = false
-            return {...state}
+            return {...state, display: true, disabled: false, max: Number(action.e.currentTarget.value)}
         }
         case 'INC-VALUE=FROM-LOCAL-STORAGE':
             return {
@@ -62,29 +41,25 @@ export const counterReducer = (state: initialStateType = initialState, action: A
 
 }
 
-export const incButtonAC = (count:number,max:number) => ({type: 'INC-BUTTON'} as const)
+export const incButtonAC = () => ({type: 'INC-BUTTON'} as const)
 export const setButtonAC = () => ({type: 'SET-BUTTON'} as const)
 export const resetButtonAC = () => ({type: 'RESET-BUTTON'} as const)
-export const onChangeStartValue = () => ({type: 'ON-CHANGE-START-VALUE'} as const)
-export const onChangeMaxValue = () => ({type: 'ON-CHANGE-MAX-VALUE'} as const)
-export const setValueFromLocalStorageAC = (count: number, max: number) => ({
-    type: 'INC-VALUE=FROM-LOCAL-STORAGE',
-    count,
-    max
-} as const)
+export const onChangeStartValueAC = (e: ChangeEvent<HTMLInputElement>) => ({type: 'ON-CHANGE-START-VALUE', e} as const)
+export const onChangeMaxValueAC = (e: ChangeEvent<HTMLInputElement>) => ({type: 'ON-CHANGE-MAX-VALUE', e} as const)
+export const setValueFromLocalStorageAC = (count: number, max: number) => ({type: 'INC-VALUE=FROM-LOCAL-STORAGE', count, max} as const)
 
 
-export type IncValuesActionType = ReturnType<typeof incButtonAC>
-export type setButtonActionType = ReturnType<typeof setButtonAC>
-export type resetButtonActionType = ReturnType<typeof resetButtonAC>
-export type onChangeStartValueActionType = ReturnType<typeof onChangeStartValue>
-export type onChangeMaxValueActionType = ReturnType<typeof onChangeMaxValue>
-export type setValueFromLocalStorageActionType = ReturnType<typeof setValueFromLocalStorageAC>
+export type IncValueActionType = ReturnType<typeof incButtonAC>
+export type SetButtonActionType = ReturnType<typeof setButtonAC>
+export type ResetButtonActionType = ReturnType<typeof resetButtonAC>
+export type OnChangeStartValueActionType = ReturnType<typeof onChangeStartValueAC>
+export type OnChangeMaxValueActionType = ReturnType<typeof onChangeMaxValueAC>
+export type SetValueFromLocalStorageActionType = ReturnType<typeof setValueFromLocalStorageAC>
 
 type ActionType =
-    IncValuesActionType
-    | setValueFromLocalStorageActionType
-    | onChangeStartValueActionType
-    | onChangeMaxValueActionType
-    | setButtonActionType
-    | resetButtonActionType
+    IncValueActionType
+    | SetValueFromLocalStorageActionType
+    | OnChangeStartValueActionType
+    | OnChangeMaxValueActionType
+    | SetButtonActionType
+    | ResetButtonActionType

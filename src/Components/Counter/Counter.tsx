@@ -7,23 +7,20 @@ type CounterPropsType = {
     count: number
     start: number
     max: number
-    disabled: boolean
-    isError: boolean
+    display: boolean
+    isError:boolean
     incButton: () => void
     resetButton: () => void
-    setButton: () => void
-    display: boolean
-
 }
 
-const Counter = (props: CounterPropsType) => {
+const Counter = (props:CounterPropsType) => {
+
     return (
         <div className={s.containerCounter}>
             <div className={s.scoreboard}>
 
                 <Scoreboard
                     count={props.count}
-                    startValue={props.start}
                     maxValue={props.max}
                     isError={props.isError}
                     display={props.display}

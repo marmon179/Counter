@@ -1,21 +1,28 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import './App.css';
 import SettingCounter from './Components/SettingCounter/SettingCounter';
 import Counter from './Components/Counter/Counter';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from './bll/store';
-import {resetButtonAC, setButtonAC} from './bll/counter-reducer';
+import {incButtonAC, onChangeMaxValueAC, onChangeStartValueAC, resetButtonAC, setButtonAC} from './bll/counter-reducer';
 
 function App() {
 
-    const [count, setCount] = useState<number>(0)
-    const [start, setStart] = useState<number>(0)
-    const [max, setMax] = useState<number>(0)
-    const [disabled, setDisabled] = useState<boolean>(false)
-    const [display, setDisplay] = useState<boolean>(true)
-
-    const value = useSelector<AppStateType,number>( state => state.counter.count)
+    const count = useSelector<AppStateType, number>(state => state.counter.count)
+    const start = useSelector<AppStateType, number>(state => state.counter.start)
+    const max = useSelector<AppStateType, number>(state => state.counter.max)
+    const disabled = useSelector<AppStateType, boolean>(state => state.counter.disabled)
+    const display = useSelector<AppStateType, boolean>(state => state.counter.display)
     const dispatch = useDispatch()
+
+    const isError = max < 0 || start >= max || start < 0
+
+    const setButton = () => {dispatch(setButtonAC())}
+    const incButton = () => dispatch(incButtonAC())
+    const resetButton = () => {dispatch(resetButtonAC())}
+    const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {dispatch(onChangeStartValueAC(e))}
+    const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {dispatch(onChangeMaxValueAC(e))}
+
 
 
     //
@@ -40,49 +47,17 @@ function App() {
     // useEffect(() => {
     //     localStorage.setItem('counterStart', JSON.stringify(start))
     // }, [start])
-
-    const isError = max < 0 || start >= max || start < 0
-
-    const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setStart(Number(e.currentTarget.value))
-        setDisplay(true)
-        setDisabled(false)
-    }
-    const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setMax(Number(e.currentTarget.value))
-        setDisplay(true)
-        setDisabled(false)
-    }
-    const incButton = () => count <= max ? setCount(count + 1) : ''
-    const setButton = () => {
-        dispatch(setButtonAC())
-        // setCount(start)
-        // setDisabled(true)
-        // setDisplay(false)
-    }
-
-    const resetButton = () =>{ dispatch(resetButtonAC())} /*setCount(start)*/
-
     return (
         <div className="App">
             <SettingCounter
-                setButton={setButton}
-                onChangeStartValue={onChangeStartValue}
+                max={max} start={start} disabled={disabled}
                 onChangeMaxValue={onChangeMaxValue}
-                start={start}
-                max={max}
-                disabled={disabled}
-                isError={isError}/>
+                onChangeStartValue={onChangeStartValue}
+                setButton={setButton} isError={isError}/>
             <Counter
-                count={count}
-                start={start}
-                max={max}
-                disabled={disabled}
-                isError={isError}
-                incButton={incButton}
-                resetButton={resetButton}
-                setButton={setButton}
-                display={display}/>
+                count={count} start={start} max={max}
+                isError={isError} display={display}
+                incButton={incButton} resetButton={resetButton}/>
         </div>
     );
 }

@@ -4,7 +4,6 @@ import s from './Scoreboard.module.css'
 
 type ScoreboardType = {
     count: number
-    startValue: number
     maxValue: number
     display: boolean
     isError: boolean
